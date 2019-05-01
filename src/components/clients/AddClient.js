@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 // import { compose } from 'redux';
 // import { connect } from 'react-redux';
@@ -17,15 +17,15 @@ class AddClient extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-  const {
-    state,
-    props: { firestore, history }
-  } = this;
-  
-  const newClient = {
-    ...state,
-    balance: state.balance === '' ? '0' : state.balance
-  }
+    const {
+      state,
+      props: { firestore, history }
+    } = this;
+
+    const newClient = {
+      ...state,
+      balance: state.balance === '' ? '0' : state.balance
+    };
 
     firestore
       .add({ collection: 'clients' }, newClient)
@@ -36,7 +36,7 @@ class AddClient extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <div className="row">
           <div className="col-md-6">
             <Link to="/" className="btn btn-link">
@@ -104,7 +104,7 @@ class AddClient extends Component {
                 <input
                   type="text"
                   name="balance"
-                  className="form-control" 
+                  className="form-control"
                   placeholder="Enter Balance"
                   onChange={this.onChange}
                   value={this.state.balance}
@@ -120,13 +120,13 @@ class AddClient extends Component {
             </form>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }
 
 AddClient.propTypes = {
   firestore: PropTypes.object.isRequired
-}
+};
 
 export default firestoreConnect()(AddClient);
