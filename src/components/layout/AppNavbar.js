@@ -7,26 +7,15 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 class AppNavbar extends Component {
   state = {
-    open: false,
-    isAuthenticated: false
+    open: false
   };
-
-  static getDerivedStateFromProps(props, state) {
-    const { auth } = props;
-
-    if (auth.uid) {
-      return { isAuthenticated: true };
-    } else {
-      return { isAuthenticated: false };
-    }
-  }
 
   toggleOpen = () => this.setState(({ open }) => ({ open: !open }));
 
   onLogoutClick = e => {
     e.preventDefault();
 
-    const { firebase } = this.props;
+    const { props: { firebase } } = this;
 
     firebase.logout();
   }
@@ -37,9 +26,8 @@ class AppNavbar extends Component {
       toggleOpen
     } = this;
 
-    const { isAuthenticated } = this.state;
-    const { auth } = this.props;
-
+    const { props: { auth } } = this;
+    
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container">
@@ -59,7 +47,7 @@ class AppNavbar extends Component {
             id="navbarMain"
           >
             <ul className="navbar-nav ml-auto">
-              {isAuthenticated ? (
+              {auth.uid ? (
                 <li className="nav-item">
                   <Link to="/" className="nav-link">
                     Dashboard
@@ -67,7 +55,7 @@ class AppNavbar extends Component {
                 </li>
               ) : null}
             </ul>
-            {isAuthenticated ? (
+            {auth.uid ? (
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <a href="#!" className="nav-link">
@@ -101,7 +89,7 @@ AppNavbar.propTypes = {
 
 export default compose(
   firebaseConnect(),
-  connect((state, props) => ({
-    auth: state.firebase.auth
+  connect((props) => ({
+    auth: props.firebase.auth
   }))
 )(AppNavbar);
