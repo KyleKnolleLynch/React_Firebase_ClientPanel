@@ -28,6 +28,15 @@ class Login extends Component {
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+  componentWillUnmount() {
+    const { message } = this.props.notify;
+    const { notifyUser } = this.props;
+
+      message && notifyUser(null, null); 
+  }
+
+  
+
   render() {
     const { message, messageType } = this.props.notify;
     return (

@@ -15,10 +15,12 @@ class AppNavbar extends Component {
   onLogoutClick = e => {
     e.preventDefault();
 
-    const { props: { firebase } } = this;
+    const {
+      props: { firebase }
+    } = this;
 
     firebase.logout();
-  }
+  };
 
   render() {
     const {
@@ -26,8 +28,10 @@ class AppNavbar extends Component {
       toggleOpen
     } = this;
 
-    const { props: { auth } } = this;
-    
+    const {
+      props: { auth }
+    } = this;
+
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container">
@@ -38,13 +42,11 @@ class AppNavbar extends Component {
             className="navbar-toggler"
             type="button"
             onClick={toggleOpen}
-            data-target="#navbarMain"
           >
             <span className="navbar-toggler-icon" />
           </button>
           <div
             className={`navbar-collapse ${!open ? 'collapse' : ''}`}
-            id="navbarMain"
           >
             <ul className="navbar-nav ml-auto">
               {auth.uid ? (
@@ -61,6 +63,12 @@ class AppNavbar extends Component {
                   <a href="#!" className="nav-link">
                     {auth.email}
                   </a>
+                </li>
+                <li className="nav-item">
+                  {' '}
+                  <Link to="/settings" className="nav-link">
+                    Edit Settings
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a
@@ -84,12 +92,14 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
   firebase: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(
   firebaseConnect(),
-  connect((props) => ({
+  connect(props => ({
     auth: props.firebase.auth
+    // settings: state.settings
   }))
 )(AppNavbar);
