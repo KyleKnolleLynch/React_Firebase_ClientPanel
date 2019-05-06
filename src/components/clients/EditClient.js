@@ -108,7 +108,7 @@ class EditClient extends Component {
                 <div className="form-group">
                   <label htmlFor="balance">Balance:</label>
                   <input
-                    type="text"
+                    type="number"
                     name="balance"
                     className="form-control"
                     placeholder="Enter Balance"
