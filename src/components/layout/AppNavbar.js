@@ -32,6 +32,8 @@ class AppNavbar extends Component {
       props: { auth }
     } = this;
 
+    const { allowRegistration } = this.props.settings;
+
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container">
@@ -83,6 +85,21 @@ class AppNavbar extends Component {
                 </li>
               </ul>
             ) : null}
+
+            {allowRegistration && !auth.uid ? (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link">
+                    Register
+                  </Link>
+                </li>
+              </ul>
+            ) : null}
           </div>
         </div>
       </nav>
@@ -98,8 +115,8 @@ AppNavbar.propTypes = {
 
 export default compose(
   firebaseConnect(),
-  connect(props => ({
-    auth: props.firebase.auth
-    // settings: state.settings
+  connect((state, props) => ({
+    auth: state.firebase.auth,
+    settings: state.settings
   }))
 )(AppNavbar);
