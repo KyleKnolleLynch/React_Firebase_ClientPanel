@@ -4,7 +4,7 @@
   "author": "Kyle Lynch",
   "private": true,
   "dependencies": {
-    "firebase": "^5.10.1",
+    "firebase": "^10.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^5.1.1",
